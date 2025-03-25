@@ -10,9 +10,12 @@ function deepCopyFieldArray(array: Field[]): Field[] {
 }
 
 describe('Test poseidon_4', () => {
-  test.skip("deploy", async () => {
-    const tx = await contract.deploy();
-    await tx.wait();
+  test("deploy", async () => {
+    const isDeployed = await contract.isDeployed();
+    if(!isDeployed) {
+      const tx = await contract.deploy();
+      await tx.wait();
+    }
   }, timeout)
 
   test("hash one element", async () => {
