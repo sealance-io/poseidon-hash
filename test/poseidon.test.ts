@@ -20,10 +20,10 @@ export function stringToBigInt(asciiString) {
 }
 
 describe('Test poseidon_8', () => {
-  test("deploy", async () => {
+  /*test("deploy", async () => {
     const tx = await contract.deploy();
     await tx.wait();
-  }, timeout)
+  }, timeout)*/
 
   test("elliptic curve operation via Leo onchain contract", async () => {
     const curve = new FieldMath().instantiateAleoEdwards();

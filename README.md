@@ -51,24 +51,8 @@ dokojs compile
 ```
 
 ## Run Tests 
-### 1. Set Up the Devnet
 
-Install and run the Aleo lightweight devnet https://github.com/kaxxa123/amareleo-chain
-
-```bash
-# Clone the Amareleo Chain repository
-git clone https://github.com/kaxxa123/amareleo-chain.git
-cd amareleo-chain
-
-# Install the devnet
-cargo install --locked --path .
-
-# Start the devnet
-amareleo-chain start
-```   
-### 2. Run tests
-
-Run the tests to deploy the Leo programs and execute elliptic curve operations and Poseidon hashes with different rates both on-chain and using the @noble/curves extension:
+Run the tests execute elliptic curve operations via Leo program and Poseidon hashes with different rates both on-chain and using the @noble/curves extension:
 
 ```bash
 npm test
