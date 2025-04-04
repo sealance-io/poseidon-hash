@@ -1,32 +1,75 @@
-# Poseidon Hash
+# Poseidon Hash Experiments
 
-This repository contains programs, tests, and auxiliary scripts for comparing the Poseidon hash result on provable SDK with the Leo program.
-**It seems like the hashes that provable SDK generates are unmatched by the hashes on Leo, so the test is not working.**
+This repository contains programs, tests, and auxiliary scripts for comparing the Poseidon hash results across the customized `@noble/curves` library, the Provable SDK, and the Leo program.
 
 ## Getting Started
 
-1. **Install Dependencies**  
-   - Navigate to the repository root and run:  
-      `npm install`
+### 1. Install Dependencies 
 
-2. **Install dokojs globally using npm** https://github.com/venture23-aleo/doko-js
-      `npm install -g @doko-js/cli@latest`
+#### Rust:
+Install Rust using the following command:
 
-4. **Build the Contracts**  
-    - `dokojs compile`
+```bash
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+```
 
-## Run Tests  
-   - **Run devnet** 
-   `./devnet.sh` following instructions from snarkOS https://github.com/ProvableHQ/snarkOS/blob/staging/devnet.sh`
-   
-   - **Run tests**
-   `npm test`
+#### Leo CLI
 
-## Contributing
+Build and install the Leo CLI from the source:
 
-Contributions are welcome. Please create pull requests with detailed descriptions and adhere to the repository's coding guidelines.
+```bash
+# Clone the Leo repository
+git clone https://github.com/ProvableHQ/leo
+cd leo
 
-## License
+# Install 'leo'
+cargo install --path .
+```
 
-This repository is licensed under the Apache License, Version 2.0.  
-See the [LICENSE](./LICENSE) file for details.
+#### Dokojs CLI 
+
+Install the Dokojs CLI https://github.com/venture23-aleo/doko-js globally using npm:
+
+```bash
+npm install -g @doko-js/cli@latest
+```
+
+#### Node.js Dependencies
+
+Navigate to the repository root and run:
+
+```bash
+npm install
+```
+
+### 2. Build the Contracts
+
+Compile the contracts using the Dokojs CLI:
+
+```bash
+dokojs compile
+```
+
+## Run Tests 
+### 1. Set Up the Devnet
+
+Install and run the Aleo lightweight devnet https://github.com/kaxxa123/amareleo-chain
+
+```bash
+# Clone the Amareleo Chain repository
+git clone https://github.com/kaxxa123/amareleo-chain.git
+cd amareleo-chain
+
+# Install the devnet
+cargo install --locked --path .
+
+# Start the devnet
+amareleo-chain start
+```   
+### 2. Run tests
+
+Run the tests to deploy the Leo programs and execute elliptic curve operations and Poseidon hashes with different rates both on-chain and using the @noble/curves extension:
+
+```bash
+npm test
+```

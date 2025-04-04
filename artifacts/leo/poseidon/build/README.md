@@ -1,4 +1,4 @@
-# poseidon_4.aleo
+# poseidon.aleo
 
 ## Build Guide
 
