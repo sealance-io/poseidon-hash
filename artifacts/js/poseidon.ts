@@ -41,29 +41,11 @@ export class PoseidonContract extends BaseContract {
     return result
   }
 
-  async hash8(r0: bigint): Promise < TransactionResponse < Transaction & receipt.PoseidonHash8Transition, [bigint] >> {
-    const r0Leo = js2leo.field(r0);
-
-    const params = [r0Leo]
-    const result = await this.ctx.execute('hash8', params);
-    result.set_converter_fn([leo2js.field]);
-    return result
-  }
-
   async hash2(r0: bigint): Promise < TransactionResponse < Transaction & receipt.PoseidonHash2Transition, [bigint] >> {
     const r0Leo = js2leo.field(r0);
 
     const params = [r0Leo]
     const result = await this.ctx.execute('hash2', params);
-    result.set_converter_fn([leo2js.field]);
-    return result
-  }
-
-  async hash4(r0: bigint): Promise < TransactionResponse < Transaction & receipt.PoseidonHash4Transition, [bigint] >> {
-    const r0Leo = js2leo.field(r0);
-
-    const params = [r0Leo]
-    const result = await this.ctx.execute('hash4', params);
     result.set_converter_fn([leo2js.field]);
     return result
   }

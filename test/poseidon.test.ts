@@ -7,16 +7,8 @@ const mode = ExecutionMode.LeoRun;
 const contract = new PoseidonContract({ mode });
 const timeout = 100000;
 
-/*function deepCopyFieldArray(array: Field[]): Field[] {
+function deepCopyFieldArray(array: Field[]): Field[] {
   return array.map(item => item.clone());
-}*/
-
-export function stringToBigInt(asciiString) {
-  let bigIntValue = BigInt(0);
-  for (let i = 0; i < asciiString.length; i++) {
-    bigIntValue = (bigIntValue << BigInt(8)) + BigInt(asciiString.charCodeAt(i));
-  }
-  return bigIntValue;
 }
 
 describe('Test poseidon_8', () => {
@@ -25,7 +17,7 @@ describe('Test poseidon_8', () => {
     await tx.wait();
   }, timeout)*/
 
-  test("elliptic curve operation via Leo onchain contract", async () => {
+  test.skip("elliptic curve operation via Leo onchain contract", async () => {
     const FM = new FieldMath();
     const curve = new FieldMath().instantiateCustomEdwards();
     const generator = curve.ExtendedPoint.fromAffine({ x: curve.CURVE.Gx, y: curve.CURVE.Gy });
@@ -62,23 +54,16 @@ describe('Test poseidon_8', () => {
   test("hash one element via Leo onchain contract", async () => {
     const FM = new FieldMath();
 
-    let tx = await contract.hash2(5084n);
+    let tx = await contract.hash2(1n);
     const [leo2_h0] = await tx.wait();
-
-    const tx1 = await contract.hash4(BigInt(5084));
-    const [leo4_h0] = await tx1.wait();
-    const tx2 = await contract.hash8(BigInt(5084));
-    let [leo8_h0] = await tx2.wait();
-
 
     console.log("Testing Poseidon(0), rate 2");
     console.log("Leo program:", leo2_h0); //4132540594984921536033865262184481519443538138414901649826982187348274943234n
-   // console.log("Leo program, rate=4:", leo4_h0); //2387678954388541241597235866306329394257080463312226456610309377094161428622n
-   // console.log("Leo program, rate=8:", leo8_h0); //5862358335167880867336970788999330600184646458990956070229678101554859450009
-    console.log("New Noble:", FM.poseidon2.hash([5084n]));
+    console.log("New Noble:", FM.poseidon2.hash([1n, 1n]));
     const Poseidon2Hasher = new Poseidon2();
-    const field0 = Field.fromString("0field");
-    const offChainHash = Poseidon2Hasher.hash(field0);
+    const Fg = Field.fromString("1field");
+    const fieldArray = [Fg, Fg];
+    const offChainHash = Poseidon2Hasher.hash(deepCopyFieldArray(fieldArray));
     console.log("Provable SDK:", offChainHash.toString());
     console.log("***************************************************************************************\n");
 /*

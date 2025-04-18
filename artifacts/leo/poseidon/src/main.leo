@@ -6,17 +6,11 @@ program poseidon.aleo {
         return el*g;
     }
 
-    transition hash8(el: field) -> public field {
-        return Poseidon8::hash_to_field(el);
-    }
     transition hash2(el: field) -> public field {
-        return Poseidon2::hash_to_field(el);
-    }
-    transition hash4(el: field) -> public field {
-        return Poseidon4::hash_to_field(el);
+        return Poseidon2::hash_to_field([el, el]);
     }
 
     transition hash_two_elements(el1: field, el2: field) -> public field {
-        return Poseidon8::hash_to_field([el1, el2]);
+        return Poseidon2::hash_to_field([el1, el2]);
     }
 }
