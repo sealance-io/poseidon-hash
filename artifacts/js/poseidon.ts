@@ -15,7 +15,7 @@ import {
   BaseContract
 } from "../../contract/base-contract";
 import {
-  TransactionModel
+  Transaction
 } from "@provablehq/sdk";
 import * as receipt from "./transitions/poseidon";
 
@@ -32,7 +32,7 @@ export class PoseidonContract extends BaseContract {
       isImportedAleo: false
     });
   }
-  async point_ops(r0: bigint): Promise < TransactionResponse < TransactionModel & receipt.PoseidonPoint_opsTransition, [bigint] >> {
+  async point_ops(r0: bigint): Promise < TransactionResponse < Transaction & receipt.PoseidonPoint_opsTransition, [bigint] >> {
     const r0Leo = js2leo.scalar(r0);
 
     const params = [r0Leo]
@@ -41,7 +41,7 @@ export class PoseidonContract extends BaseContract {
     return result
   }
 
-  async hash8(r0: bigint): Promise < TransactionResponse < TransactionModel & receipt.PoseidonHash8Transition, [bigint] >> {
+  async hash8(r0: bigint): Promise < TransactionResponse < Transaction & receipt.PoseidonHash8Transition, [bigint] >> {
     const r0Leo = js2leo.field(r0);
 
     const params = [r0Leo]
@@ -50,7 +50,7 @@ export class PoseidonContract extends BaseContract {
     return result
   }
 
-  async hash2(r0: bigint): Promise < TransactionResponse < TransactionModel & receipt.PoseidonHash2Transition, [bigint] >> {
+  async hash2(r0: bigint): Promise < TransactionResponse < Transaction & receipt.PoseidonHash2Transition, [bigint] >> {
     const r0Leo = js2leo.field(r0);
 
     const params = [r0Leo]
@@ -59,7 +59,7 @@ export class PoseidonContract extends BaseContract {
     return result
   }
 
-  async hash4(r0: bigint): Promise < TransactionResponse < TransactionModel & receipt.PoseidonHash4Transition, [bigint] >> {
+  async hash4(r0: bigint): Promise < TransactionResponse < Transaction & receipt.PoseidonHash4Transition, [bigint] >> {
     const r0Leo = js2leo.field(r0);
 
     const params = [r0Leo]
@@ -68,7 +68,7 @@ export class PoseidonContract extends BaseContract {
     return result
   }
 
-  async hash_two_elements(r0: bigint, r1: bigint): Promise < TransactionResponse < TransactionModel & receipt.PoseidonHash_two_elementsTransition, [bigint] >> {
+  async hash_two_elements(r0: bigint, r1: bigint): Promise < TransactionResponse < Transaction & receipt.PoseidonHash_two_elementsTransition, [bigint] >> {
     const r0Leo = js2leo.field(r0);
     const r1Leo = js2leo.field(r1);
 

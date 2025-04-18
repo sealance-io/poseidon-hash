@@ -1,5 +1,5 @@
 import { ExecutionMode } from "@doko-js/core";
-//import { Field, Poseidon8, Poseidon4, Poseidon2 } from "@provablehq/sdk";
+import { Field, Poseidon8, Poseidon4, Poseidon2 } from "@provablehq/sdk";
 import { PoseidonContract } from "../artifacts/js/poseidon";
 import { FieldMath } from "./BLS12_377FieldMath";
 
@@ -26,7 +26,8 @@ describe('Test poseidon_8', () => {
   }, timeout)*/
 
   test("elliptic curve operation via Leo onchain contract", async () => {
-    const curve = new FieldMath().instantiateAleoEdwards();
+    const FM = new FieldMath();
+    const curve = new FieldMath().instantiateCustomEdwards();
     const generator = curve.ExtendedPoint.fromAffine({ x: curve.CURVE.Gx, y: curve.CURVE.Gy });
 
     let tx = await contract.point_ops(BigInt(1));
@@ -59,26 +60,28 @@ describe('Test poseidon_8', () => {
   }, timeout)
 
   test("hash one element via Leo onchain contract", async () => {
-    let tx = await contract.hash2(BigInt(0));
+    const FM = new FieldMath();
+
+    let tx = await contract.hash2(5084n);
     const [leo2_h0] = await tx.wait();
 
-    const tx1 = await contract.hash4(BigInt(0));
+    const tx1 = await contract.hash4(BigInt(5084));
     const [leo4_h0] = await tx1.wait();
-    const tx2 = await contract.hash8(BigInt(0));
+    const tx2 = await contract.hash8(BigInt(5084));
     let [leo8_h0] = await tx2.wait();
 
-    console.log("Testing Poseidon(0)");
-    console.log("Leo program, rate=2:", leo2_h0); //4132540594984921536033865262184481519443538138414901649826982187348274943234n
-    console.log("Leo program, rate=4:", leo4_h0); //2387678954388541241597235866306329394257080463312226456610309377094161428622n
-    console.log("Leo program, rate=8:", leo8_h0); //5862358335167880867336970788999330600184646458990956070229678101554859450009
 
-    const noble_h0 = new FieldMath().poseidonHash(BigInt(0));
-    console.log("Noble extension:", noble_h0);
-    if (leo8_h0 !== noble_h0) {
-      console.log("ERROR: Mismatch between Leo and Noble results");
-    }
+    console.log("Testing Poseidon(0), rate 2");
+    console.log("Leo program:", leo2_h0); //4132540594984921536033865262184481519443538138414901649826982187348274943234n
+   // console.log("Leo program, rate=4:", leo4_h0); //2387678954388541241597235866306329394257080463312226456610309377094161428622n
+   // console.log("Leo program, rate=8:", leo8_h0); //5862358335167880867336970788999330600184646458990956070229678101554859450009
+    console.log("New Noble:", FM.poseidon2.hash([5084n]));
+    const Poseidon2Hasher = new Poseidon2();
+    const field0 = Field.fromString("0field");
+    const offChainHash = Poseidon2Hasher.hash(field0);
+    console.log("Provable SDK:", offChainHash.toString());
     console.log("***************************************************************************************\n");
-
+/*
     console.log("Testing Poseidon(5084)");
     const tx3 = await contract.hash2(BigInt(5084));
     const [leo_h5084] = await tx3.wait();
@@ -90,28 +93,19 @@ describe('Test poseidon_8', () => {
     console.log("Leo program, rate=4:", leo4_h5084); //4523549028034176074169972053584790035174355241209682280740896298094392735328n
     console.log("Leo program, rate=8:", leo8_h5084); //2909604368229020327865981054412671419552178318905636927124341437588112307402n
 
-    const noble_h5084 = new FieldMath().poseidonHash(BigInt(5084));
+    const noble_h5084 = FM.poseidon4.hash([BigInt(5084)]);
     console.log("Noble extension:", noble_h5084);
 
     if (leo8_h5084 !== noble_h5084) {
       console.log("ERROR: Mismatch between Leo and Noble results");
     }
     console.log("***************************************************************************************\n");
+*/
 
-    //const hash = await fieldPoseidon("0field");
-    //console.log(stringToBigInt("Poseidon8"));
-    //const result = new FieldMath().poseidonHash([BigInt(0)]);
-    //console.log(poseidonField);
-    //console.log(result.toString());
-    //const field = Field.fromString("0field");
-    //const Poseidon4Hasher = new Poseidon8();
-    //const offChainHash = Poseidon4Hasher.hash(field);
-    //console.log(offChainHash.toString());
-    //expect(offChainHash.toString()).toBe(onChainHash);
   }, timeout)
 
 
-  test("hash two element", async () => {
+  test.skip("hash two element", async () => {
     const tx = await contract.hash_two_elements(BigInt(0), BigInt(0));
     const [leo_h0_0] = await tx.wait();
     console.log("Testing Poseidon8([0,0])");

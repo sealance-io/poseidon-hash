@@ -2,7 +2,7 @@ program poseidon.aleo;
 
 function point_ops:
     input r0 as scalar.private;
-    mul r0 group::GEN into r1;
+    mul r0 1540945439182663264862696551825005342995406165131907382295858612069623286213group into r1;
     output r1 as group.public;
 
 function hash8:

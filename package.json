@@ -21,8 +21,9 @@
     "@doko-js/core": "^1.0.2",
     "@doko-js/utils": "^1.0.0",
     "@doko-js/wasm": "^1.0.0",
-    "@noble/curves": "^0.9.1",
-    "@provablehq/sdk": "^0.6.9",
+    "@noble/curves": "file:../noble-curves",
+    "@noble/hashes": "^1.7.2",
+    "@provablehq/sdk": "^0.8.8",
     "dotenv": "^16.4.7",
     "zod": "^3.24.2"
   },
